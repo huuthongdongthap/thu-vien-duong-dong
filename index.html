@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Phân Loại Sách — Thư Viện THPT Dương Đông</title>
+    <meta name="description" content="Trang phân loại sách theo đề mục, từ khoá, chủ đề — Thư viện THPT Dương Đông, Phú Quốc">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Hero Header -->
+    <header class="hero">
+        <div class="hero-bg"></div>
+        <div class="hero-content">
+            <div class="hero-badge">📚 Thư Viện THPT Dương Đông</div>
+            <h1>Phân Loại Sách</h1>
+            <p class="hero-subtitle">Tra cứu theo đề mục, từ khoá & chủ đề — <strong>2.400 tài liệu</strong></p>
+            <!-- Search Bar -->
+            <div class="search-bar">
+                <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+                <input type="text" id="globalSearch" placeholder="Tìm kiếm sách, tác giả, chủ đề..." autocomplete="off">
+                <button id="clearSearch" class="clear-btn" style="display:none">✕</button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Stats Bar -->
+    <section class="stats-bar">
+        <div class="stat-item">
+            <span class="stat-number">2,400</span>
+            <span class="stat-label">Tổng tài liệu</span>
+        </div>
+        <div class="stat-item">
+            <span class="stat-number">6</span>
+            <span class="stat-label">Bộ sưu tập</span>
+        </div>
+        <div class="stat-item">
+            <span class="stat-number">10</span>
+            <span class="stat-label">Nhóm DDC</span>
+        </div>
+        <div class="stat-item">
+            <span class="stat-number">25+</span>
+            <span class="stat-label">Chủ đề</span>
+        </div>
+    </section>
+
+    <!-- Filter Tabs -->
+    <nav class="filter-nav">
+        <button class="filter-tab active" data-view="collections">📂 Bộ Sưu Tập</button>
+        <button class="filter-tab" data-view="ddc">🔢 Phân Loại DDC</button>
+        <button class="filter-tab" data-view="subjects">📖 Chủ Đề</button>
+        <button class="filter-tab" data-view="keywords">🏷️ Từ Khoá</button>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main-content">
+
+        <!-- View: Collections -->
+        <section id="view-collections" class="view active">
+            <h2 class="section-title">Bộ Sưu Tập <span class="badge">6 bộ</span></h2>
+            <div class="card-grid collections-grid" id="collectionsGrid"></div>
+        </section>
+
+        <!-- View: DDC -->
+        <section id="view-ddc" class="view">
+            <h2 class="section-title">Phân Loại Dewey (DDC) <span class="badge">10 nhóm chính</span></h2>
+            <div class="ddc-container" id="ddcContainer"></div>
+        </section>
+
+        <!-- View: Subjects -->
+        <section id="view-subjects" class="view">
+            <h2 class="section-title">Chủ Đề <span class="badge">Theo môn học & lĩnh vực</span></h2>
+            <div class="subjects-container" id="subjectsContainer"></div>
+        </section>
+
+        <!-- View: Keywords -->
+        <section id="view-keywords" class="view">
+            <h2 class="section-title">Từ Khoá <span class="badge">Tag cloud</span></h2>
+            <div class="tag-cloud" id="tagCloud"></div>
+        </section>
+
+        <!-- Book Results Panel -->
+        <section id="resultsPanel" class="results-panel" style="display:none">
+            <div class="results-header">
+                <h3 id="resultsTitle">Kết quả</h3>
+                <button id="closeResults" class="close-btn">✕ Đóng</button>
+            </div>
+            <div class="results-list" id="resultsList"></div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="site-footer">
+        <p>Thư Viện THPT Dương Đông — Phú Quốc, Kiên Giang</p>
+        <p class="footer-sub">Hệ thống VietBiblio/OpenBiblio • Dữ liệu cập nhật 2024</p>
+    </footer>
+
+    <script src="data.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>

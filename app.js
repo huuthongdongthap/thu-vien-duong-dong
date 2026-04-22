@@ -1,12 +1,11 @@
-// ===== APP.JS — Book Classification Page =====
+// ===== APP.JS — Trang Phân Loại Sách =====
+// Kết nối trực tiếp với OPAC Thư Viện THPT Dương Đông
 (function() {
   'use strict';
-
   const D = LIBRARY_DATA;
   const $ = s => document.querySelector(s);
   const $$ = s => document.querySelectorAll(s);
 
-  // ===== INIT =====
   document.addEventListener('DOMContentLoaded', () => {
     renderCollections();
     renderDDC();
@@ -17,15 +16,14 @@
     bindCloseResults();
   });
 
-  // ===== TAB NAVIGATION =====
+  // ===== TABS =====
   function bindTabs() {
     $$('.filter-tab').forEach(tab => {
       tab.addEventListener('click', () => {
         $$('.filter-tab').forEach(t => t.classList.remove('active'));
         tab.classList.add('active');
-        const view = tab.dataset.view;
         $$('.view').forEach(v => v.classList.remove('active'));
-        $(`#view-${view}`).classList.add('active');
+        $(`#view-${tab.dataset.view}`).classList.add('active');
         hideResults();
       });
     });
@@ -35,22 +33,26 @@
   function renderCollections() {
     const grid = $('#collectionsGrid');
     grid.innerHTML = D.collections.map(c => `
-      <div class="collection-card" style="--card-accent:${c.color}" data-filter="coll" data-value="${c.code}">
+      <div class="collection-card" style="--card-accent:${c.color}" data-code="${c.code}">
         <div class="card-icon">${c.icon}</div>
         <div class="card-code">${c.code}</div>
         <div class="card-name">${c.name}</div>
         <div class="card-count">${c.count.toLocaleString()}<span>tài liệu</span></div>
-        <div class="card-loan">Thời hạn mượn: <strong>${c.loan} ngày</strong></div>
+        <div class="card-loan">Mượn: <strong>${c.loan} ngày</strong></div>
         <p style="font-size:0.82rem;color:var(--text-dim);margin-top:8px">${c.desc}</p>
       </div>
     `).join('');
-
     grid.querySelectorAll('.collection-card').forEach(card => {
       card.addEventListener('click', () => {
-        const code = card.dataset.value;
-        const coll = D.collections.find(c => c.code === code);
-        const books = D.books.filter(b => b.coll === code);
-        showResults(`${coll.icon} ${coll.name} (${coll.code})`, books, `Bộ sưu tập: ${coll.name}`);
+        const c = D.collections.find(x => x.code === card.dataset.code);
+        // Lọc tủ sách thuộc bộ sưu tập này
+        const related = D.tuSach.filter(ts =>
+          (c.code === 'GK' && (ts.category.includes('SGK') || ts.category.includes('lớp'))) ||
+          (c.code === 'TK' && (ts.category === 'Tham khảo' || ts.category === 'Môn học' || ts.category === 'Chuyên đề')) ||
+          (c.code === 'NV' && ts.category === 'Nghiệp vụ') ||
+          (c.code === 'TIENGANH' && ts.category === 'Ngoại ngữ')
+        );
+        showTuSachResults(`${c.icon} ${c.name}`, related, `${c.count} tài liệu — Mượn ${c.loan} ngày`);
       });
     });
   }
@@ -58,69 +60,74 @@
   // ===== DDC =====
   function renderDDC() {
     const container = $('#ddcContainer');
-    const maxCount = Math.max(...D.ddc.map(d => d.count));
-
-    container.innerHTML = D.ddc.map(d => {
-      const pct = Math.round((d.count / maxCount) * 100);
-      return `
-        <div class="ddc-row" data-filter="ddc" data-value="${d.num}" style="--ddc-color:${d.color}">
-          <div class="ddc-num">${d.num}</div>
-          <div style="flex:1">
-            <div class="ddc-name">${d.name}</div>
-            <div class="ddc-name-vi">${d.nameVi}</div>
-          </div>
-          <div class="ddc-bar-wrap">
-            <div class="ddc-bar" style="width:${pct}%;background:${d.color}"></div>
-          </div>
-          <div class="ddc-count">${d.count}</div>
+    container.innerHTML = D.ddc.map(d => `
+      <div class="ddc-row" data-num="${d.num}" style="--ddc-color:${d.num === '800' ? '#1565c0' : d.num === '500' ? '#2e7d32' : d.num === '300' ? '#e65100' : d.num === '900' ? '#c62828' : d.num === '700' ? '#ad1457' : d.num === '100' ? '#6a1b9a' : d.num === '400' ? '#00838f' : d.num === '600' ? '#ef6c00' : '#546e7a'}">
+        <div class="ddc-num">${d.num}</div>
+        <div style="flex:1">
+          <div class="ddc-name">${d.name}</div>
+          <div class="ddc-name-vi">${d.nameVi}</div>
         </div>
-      `;
-    }).join('');
-
+        <a href="${searchLink('090a', d.num)}" target="_blank" class="ddc-link">Tra cứu ↗</a>
+      </div>
+    `).join('');
     container.querySelectorAll('.ddc-row').forEach(row => {
-      row.addEventListener('click', () => {
-        const num = row.dataset.value;
-        const ddc = D.ddc.find(d => d.num === num);
-        const books = D.books.filter(b => b.ddc && b.ddc.startsWith(num.charAt(0)));
-        showResults(`🔢 DDC ${ddc.num} — ${ddc.name}`, books, ddc.nameVi);
+      row.addEventListener('click', (e) => {
+        if (e.target.tagName === 'A') return;
+        const num = row.dataset.num;
+        const d = D.ddc.find(x => x.num === num);
+        if (d.subs) {
+          showDDCSubResults(`🔢 DDC ${d.num} — ${d.name}`, d);
+        } else {
+          window.open(searchLink('090a', num), '_blank');
+        }
       });
     });
   }
 
-  // ===== SUBJECTS =====
+  // ===== SUBJECTS (Tủ Sách) =====
   function renderSubjects() {
     const container = $('#subjectsContainer');
     const grouped = {};
-    D.subjects.forEach(s => {
-      if (!grouped[s.category]) grouped[s.category] = [];
-      grouped[s.category].push(s);
+    D.tuSach.forEach(ts => {
+      if (!grouped[ts.category]) grouped[ts.category] = [];
+      grouped[ts.category].push(ts);
     });
+
+    const icons = {
+      'Chuyên đề':'📚','SGK':'📗','SGK Lớp 10':'🔟','SGK Lớp 11':'1️⃣','SGK Lớp 12':'🔢',
+      'Chuyên đề lớp 10':'📝','Chuyên đề lớp 11':'📝','Chuyên đề lớp 12':'📝',
+      'Bài tập lớp 10':'✏️','Bài tập lớp 11':'✏️',
+      'Tham khảo':'📘','Nghiệp vụ':'📕','Môn học':'📐','Nghệ thuật':'🎨',
+      'Văn học':'📖','Khoa học':'🔬','Ngoại ngữ':'🇬🇧','Công cụ':'🗺️',
+      'Kỹ năng':'🌱','Giải trí':'🎮','Lịch sử':'🏛️','Đất nước':'🇻🇳',
+      'Văn hoá':'🎭','Địa phương':'🌴','Chính trị':'⭐','Khác':'📦',
+      'Công nghệ':'🔧','Thể chất lớp 11':'⚽',
+    };
 
     let html = '';
     for (const [cat, items] of Object.entries(grouped)) {
       html += `<div style="grid-column:1/-1;margin-top:16px;margin-bottom:4px">
-        <h3 style="font-size:0.85rem;text-transform:uppercase;letter-spacing:2px;color:var(--text-dim);font-weight:600">${cat}</h3>
+        <h3 style="font-size:0.82rem;text-transform:uppercase;letter-spacing:1.5px;color:var(--text-dim);font-weight:600">${cat} (${items.length})</h3>
       </div>`;
-      items.forEach(s => {
+      items.forEach(ts => {
+        const icon = icons[ts.category] || '📄';
         html += `
-          <div class="subject-card" data-filter="subject" data-value="${s.name}">
-            <div class="subject-icon">${s.icon}</div>
+          <div class="subject-card" data-name="${ts.name}">
+            <div class="subject-icon">${icon}</div>
             <div class="subject-info">
-              <div class="subject-name">${s.name}</div>
-              <div class="subject-meta">${s.count} tài liệu${s.grades ? ' • Lớp ' + s.grades : ''}</div>
+              <div class="subject-name">${ts.name}</div>
+              <div class="subject-meta">${ts.category}</div>
             </div>
-          </div>
-        `;
+          </div>`;
       });
     }
     container.innerHTML = html;
 
     container.querySelectorAll('.subject-card').forEach(card => {
       card.addEventListener('click', () => {
-        const name = card.dataset.value;
-        const subj = D.subjects.find(s => s.name === name);
-        const books = D.books.filter(b => b.subject === name || b.title.includes(name));
-        showResults(`${subj.icon} ${subj.name}`, books, `${subj.count} tài liệu`);
+        const name = card.dataset.name;
+        // Mở trực tiếp link tra cứu trên web thư viện
+        window.open(viewTmLink(name), '_blank');
       });
     });
   }
@@ -128,22 +135,27 @@
   // ===== KEYWORDS =====
   function renderKeywords() {
     const cloud = $('#tagCloud');
-    const shuffled = [...D.keywords].sort(() => Math.random() - 0.5);
+    // Tạo tag từ tên tủ sách + DDC
+    const tags = new Map();
+    D.tuSach.forEach(ts => {
+      const base = ts.name.replace(/\d+/g,'').replace(/\s+/g,' ').trim();
+      if (base.length > 2) tags.set(base, (tags.get(base)||0) + 1);
+    });
+    // Thêm DDC
+    D.ddc.forEach(d => { tags.set(d.name, 3); });
+    // Thêm manual tags
+    ['Phú Quốc','Kiên Giang','Biển đảo','Đề thi','Ôn tập','Bài tập','Chuyên đề','Nâng cao',
+     'Lớp 10','Lớp 11','Lớp 12','Giáo viên','Học sinh giỏi'].forEach(t => tags.set(t, 2));
 
-    cloud.innerHTML = shuffled.map(k => {
-      const sizeClass = k.weight >= 5 ? 'size-lg' : k.weight >= 3 ? 'size-md' : '';
-      return `<span class="tag ${sizeClass}" data-word="${k.word}">${k.word}</span>`;
+    const sorted = [...tags.entries()].sort(() => Math.random() - 0.5);
+    cloud.innerHTML = sorted.map(([word, count]) => {
+      const cls = count >= 4 ? 'size-lg' : count >= 2 ? 'size-md' : '';
+      return `<span class="tag ${cls}" data-word="${word}">${word}</span>`;
     }).join('');
 
     cloud.querySelectorAll('.tag').forEach(tag => {
       tag.addEventListener('click', () => {
-        const word = tag.dataset.word;
-        const books = D.books.filter(b =>
-          b.title.toLowerCase().includes(word.toLowerCase()) ||
-          b.subject.toLowerCase().includes(word.toLowerCase()) ||
-          b.author.toLowerCase().includes(word.toLowerCase())
-        );
-        showResults(`🏷️ "${word}"`, books, `Kết quả tìm kiếm từ khoá`);
+        window.open(searchLink('keyword', tag.dataset.word), '_blank');
       });
     });
   }
@@ -152,111 +164,77 @@
   function bindSearch() {
     const input = $('#globalSearch');
     const clearBtn = $('#clearSearch');
-    let debounce;
-
     input.addEventListener('input', () => {
       clearBtn.style.display = input.value ? 'block' : 'none';
-      clearTimeout(debounce);
-      debounce = setTimeout(() => {
-        if (input.value.trim().length >= 2) {
-          doSearch(input.value.trim());
-        } else {
-          hideResults();
-        }
-      }, 300);
     });
-
+    input.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' && input.value.trim()) {
+        window.open(searchLink('keyword', input.value.trim()), '_blank');
+      }
+    });
     clearBtn.addEventListener('click', () => {
       input.value = '';
       clearBtn.style.display = 'none';
-      hideResults();
       input.focus();
     });
   }
 
-  function doSearch(query) {
-    const q = query.toLowerCase();
-    const results = D.books.filter(b =>
-      b.title.toLowerCase().includes(q) ||
-      b.author.toLowerCase().includes(q) ||
-      b.subject.toLowerCase().includes(q) ||
-      b.ddc.includes(q) ||
-      b.coll.toLowerCase().includes(q)
-    );
-
-    // Also search subjects
-    const matchedSubjects = D.subjects.filter(s => s.name.toLowerCase().includes(q));
-    const matchedDDC = D.ddc.filter(d =>
-      d.name.toLowerCase().includes(q) ||
-      d.nameVi.toLowerCase().includes(q) ||
-      d.num.startsWith(q)
-    );
-
-    // Add books from matched subjects
-    matchedSubjects.forEach(s => {
-      D.books.forEach(b => {
-        if (b.subject === s.name && !results.includes(b)) results.push(b);
-      });
-    });
-
-    showResults(`🔍 Kết quả cho "${query}"`, results, `${results.length} tài liệu tìm thấy`);
+  // ===== RESULTS =====
+  function showTuSachResults(title, items, subtitle) {
+    const panel = $('#resultsPanel');
+    $('#resultsTitle').innerHTML = `${title} <span style="font-size:0.85rem;color:var(--text-dim);font-weight:400;margin-left:8px">${subtitle}</span>`;
+    const list = $('#resultsList');
+    if (!items.length) {
+      list.innerHTML = `<div class="no-results"><p>Tra cứu trực tiếp tại <a href="${LIBRARY_URL}/opac/index.php" target="_blank">OPAC Thư Viện ↗</a></p></div>`;
+    } else {
+      list.innerHTML = items.map((ts, i) => `
+        <div class="result-item" style="cursor:pointer" onclick="window.open('${viewTmLink(ts.name)}','_blank')">
+          <div class="result-num">${i+1}</div>
+          <div class="result-info">
+            <div class="result-title">${ts.name}</div>
+            <div class="result-meta"><span>📂 ${ts.category}</span></div>
+          </div>
+          <div class="result-ddc">Xem ↗</div>
+        </div>
+      `).join('');
+    }
+    panel.style.display = 'block';
+    panel.scrollIntoView({ behavior:'smooth', block:'nearest' });
   }
 
-  // ===== RESULTS PANEL =====
-  function showResults(title, books, subtitle) {
+  function showDDCSubResults(title, ddcItem) {
     const panel = $('#resultsPanel');
-    const titleEl = $('#resultsTitle');
+    $('#resultsTitle').textContent = title;
     const list = $('#resultsList');
-
-    titleEl.innerHTML = `${title} <span style="font-size:0.85rem;color:var(--text-dim);font-weight:400;margin-left:8px">${subtitle || ''}</span>`;
-
-    if (books.length === 0) {
-      list.innerHTML = `
-        <div class="no-results">
-          <p style="font-size:1.5rem;margin-bottom:8px">📭</p>
-          <p>Chưa có dữ liệu mẫu cho mục này.</p>
-          <p style="margin-top:4px;font-size:0.82rem">Tra cứu trực tiếp tại
-            <a href="https://tvthptduongdong.vsl.vn/lms/opac/index.php" target="_blank" style="color:var(--accent)">OPAC Thư Viện</a>
-          </p>
-        </div>
-      `;
+    if (!ddcItem.subs) {
+      list.innerHTML = `<div class="no-results">Nhấn "Tra cứu" để xem sách thuộc DDC ${ddcItem.num}</div>`;
     } else {
-      list.innerHTML = books.map((b, i) => {
-        const collInfo = D.collections.find(c => c.code === b.coll);
-        return `
-          <div class="result-item">
-            <div class="result-num">${i + 1}</div>
-            <div class="result-info">
-              <div class="result-title">${highlightMatch(b.title)}</div>
-              <div class="result-meta">
-                <span>✍️ ${b.author}</span>
-                <span>📂 ${collInfo ? collInfo.name : b.coll}</span>
-                <span>📖 ${b.subject}</span>
-              </div>
-            </div>
-            <div class="result-ddc">DDC ${b.ddc}</div>
+      list.innerHTML = ddcItem.subs.map((sub, i) => {
+        if (typeof sub === 'string') {
+          const parts = sub.match(/^([\d.]+)\s+(.+)$/);
+          if (parts) {
+            return `<div class="result-item" style="cursor:pointer" onclick="window.open('${searchLink('090a', parts[1])}','_blank')">
+              <div class="result-num">${parts[1]}</div>
+              <div class="result-info"><div class="result-title">${parts[2]}</div></div>
+              <div class="result-ddc">Tra cứu ↗</div>
+            </div>`;
+          }
+          return `<div class="result-item"><div class="result-info"><div class="result-title">${sub}</div></div></div>`;
+        }
+        return `<div class="result-item" style="cursor:pointer" onclick="window.open('${searchLink('090a', sub.num)}','_blank')">
+          <div class="result-num">${sub.num}</div>
+          <div class="result-info">
+            <div class="result-title">${sub.name}</div>
+            ${sub.subs ? `<div class="result-meta">${sub.subs.length} phân nhóm con</div>` : ''}
           </div>
-        `;
+          <div class="result-ddc">Tra cứu ↗</div>
+        </div>`;
       }).join('');
     }
-
     panel.style.display = 'block';
-    panel.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    panel.scrollIntoView({ behavior:'smooth', block:'nearest' });
   }
 
-  function hideResults() {
-    $('#resultsPanel').style.display = 'none';
-  }
-
-  function bindCloseResults() {
-    $('#closeResults').addEventListener('click', hideResults);
-  }
-
-  function highlightMatch(text) {
-    const q = ($('#globalSearch').value || '').trim();
-    if (!q) return text;
-    const regex = new RegExp(`(${q.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')})`, 'gi');
-    return text.replace(regex, '<mark style="background:var(--accent);color:#fff;padding:0 2px;border-radius:3px">$1</mark>');
-  }
-
+  function hideResults() { $('#resultsPanel').style.display = 'none'; }
+  function bindCloseResults() { $('#closeResults').addEventListener('click', hideResults); }
 })();

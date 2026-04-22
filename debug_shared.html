@@ -1,0 +1,746 @@
+<html>
+<head>
+
+
+<link href='../favicon.ico' rel='icon' type='image/x-icon'/>  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <meta charset=UTF-8">
+
+
+	<meta name="robots" content="noindex">
+	<meta name="googlebot" content="noindex">	
+  <meta name="keywords" content="Chuyển đổi số thư viện, phần mềm thư viện, thư viện số, thư viện điện tử">
+  <meta name="description" content="Phần mềm quản lý thư viện dành cho thư viện nông thôn, trường học">
+
+<!-- **************************************************************************************
+     * ajusta estilos con o sin boostrap
+     **************************************************************************************-->
+  <link href="../css/bootstrap.min.css" rel="stylesheet"><style type="text/css"><link href="../css/style.css" rel="stylesheet" type="text/css" media="screen" />/*********************************************************
+ *  Body Style
+ *********************************************************/
+body {
+  background-color: #ffffff;
+}
+
+/*********************************************************
+ *  Font Styles
+ *********************************************************/
+font.primary, .primary td {
+  color: #333333;
+  font-size: 13px;
+  font-family: Arial;
+}
+font.alt1 {
+  color: #333333;
+  font-size: 13px;
+  font-family: Arial;
+}
+font.alt1tab {
+  color: #333333;
+  font-size: 13px;
+  font-family: Verdana,Arial,Helvetica;
+  font-weight: bold;
+}
+font.alt2 {
+  color: #ffffff;
+  font-size: 13px;
+  font-family: Verdana,Arial,Helvetica;
+  font-weight: bold;
+}
+font.error {
+  color: #d32e2e;
+  font-size: 13px;
+  font-family: Arial;
+  font-weight: bold;
+}
+font.small {
+  font-size: 10px;
+  font-family: Arial;
+}
+a.nav {
+  color: #333333;
+  font-size: 10px;
+  font-family: Arial;
+  text-decoration: none;
+  background-color: #eeeeee;
+  border-style: solid;
+  border-color: #eeeeee;
+  border-width: 1}
+h1 {
+  font-size: 16px;
+  font-family: Arial;
+  font-weight: normal;
+}
+
+/*********************************************************
+ *  Link Styles
+ *********************************************************/
+a:link {
+  color: #0d69ba;
+}
+a:visited {
+  color: #0d69ba;
+}
+a.primary:link {
+  color: #0d69ba;
+}
+a.primary:visited {
+  color: #0d69ba;
+}
+a.alt1:link {
+  color: #0d69ba;
+}
+a.alt1:visited {
+  color: #0d69ba;
+}
+a.alt2:link {
+  color: #ffffff;
+}
+a.alt2:visited {
+  color: #ffffff;
+}
+a.tab:link {
+  color: #ffffff;
+  font-size: 13px;
+  font-family: Verdana,Arial,Helvetica;
+  font-weight: bold;
+  text-decoration: none
+}
+a.tab:visited {
+  color: #ffffff;
+  font-size: 13px;
+  font-family: Verdana,Arial,Helvetica;
+  font-weight: bold;
+  text-decoration: none
+}
+a.tab:hover {text-decoration: underline}
+
+/*********************************************************
+ *  Table Styles
+ *********************************************************/
+table.primary {
+  border-collapse: collapse
+}
+
+table.border {
+  border-style: solid;
+  border-color: #eeeeee;
+  border-width: 1}
+th {
+  background-color: #5f92bf;
+  color: #ffffff;
+  font-size: 13px;
+  font-family: Verdana,Arial,Helvetica;
+  padding: 3;
+  border-style: solid;
+  font-weight: bold;
+  border-color: #eeeeee;
+  border-width: 1;
+  height: 1
+}
+th.rpt {
+  background-color: #ffffff;
+  color: #333333;
+  font-size: 11px;
+  font-family: Arial;
+  font-weight: bold;
+  padding: 3;
+  border-style: solid;
+  border-color: #eeeeee;
+  border-width: 1;
+  text-align: left;
+  vertical-align: bottom;
+}
+td.primary {
+  background-color: #ffffff;
+  color: #333333;
+  font-size: 13px;
+  font-family: Arial;
+  padding: 3;
+  border-style: solid;
+  border-color: #eeeeee;
+  border-width: 1}
+
+td.primary2 {
+  background-color: #FCF3CF;
+  color: #333333;
+  font-size: 13px;
+  font-family: Arial;
+  padding: 3;
+  border-style: solid;
+  border-color: #eeeeee;
+  border-width: 1}
+
+td.borderless {
+  background-color: #ffffff;
+  color: #333333;
+  font-size: 13px;
+  font-family: Arial;
+  padding: 3;
+}
+td.rpt {
+  background-color: #ffffff;
+  color: #333333;
+  font-size: 11px;
+  font-family: Arial;
+  padding: 3;
+  border-top-style: none;
+  border-bottom-style: none;
+  border-left-style: solid;
+  border-left-color: #eeeeee;
+  border-left-width: 1;
+  border-right-style: solid;
+  border-right-color: #eeeeee;
+  border-right-width: 1;
+  text-align: left;
+  vertical-align: top;
+}
+td.primaryNoWrap {
+  background-color: #ffffff;
+  color: #333333;
+  font-size: 13px;
+  font-family: Arial;
+  padding: 3;
+  border-style: solid;
+  border-color: #eeeeee;
+  border-width: 1;
+  white-space: nowrap
+}
+
+td.title {
+  background-color: #CCCCCC;
+  color: #000000;
+  font-size: 26px;
+  font-family: Arial,Helvetica,sans-serif;
+  padding: 3;
+  font-weight: normal;
+  border-color: #eeeeee;
+  border-width: 1;
+  text-align: left}
+td.alt1 {
+  background-color: #eeeeee;
+  color: #333333;
+  font-size: 13px;
+  font-family: Arial;
+  padding: 3;
+  border-style: solid;
+  border-color: #eeeeee;
+  border-width: 1}
+td.tab1 {
+  background-color: #eeeeee;
+  color: #333333;
+  font-size: 13px;
+  font-family: Verdana,Arial,Helvetica;
+  font-weight: bold;
+  padding: 3;
+}
+td.tab2 {
+  background-color: #5f92bf;
+  color: #ffffff;
+  font-size: 13px;
+  font-family: Verdana,Arial,Helvetica;
+  font-weight: bold;
+  padding: 3;
+}
+td.noborder {
+  background-color: #ffffff;
+  color: #333333;
+  font-size: 13px;
+  font-family: Arial;
+  padding: 3;
+}
+table.form { margin-bottom: 1em }
+table.form th.title {
+  background-color: #ffffff;
+  color: #333333;
+  text-align: left;
+  font-weight: bold;
+  font-size: 18px;
+  border: none;
+  border-bottom: solid #5f92bf 2px;
+}
+table.form th {
+  text-align: right;
+  vertical-align: top;
+  background-color: #ffffff;
+  color: #333333;
+  border: none;
+}
+table.form .error { font-weight: bold; color: red }
+table.form .error { font-weight: bold; color: red }
+/*********************************************************
+ *  Form Styles
+ *********************************************************/
+input.button {
+  background-color: #eeeeee;
+  border-color: #eeeeee;
+  border-left-color: #eeeeee;
+  border-top-color: #eeeeee;
+  border-bottom-color: #eeeeee;
+  border-right-color: #eeeeee;
+  padding: 3;
+  font-family: Arial;
+  color: #333333;
+}
+input.navbutton {
+  background-color: #5f92bf;
+  border-color: #5f92bf;
+  border-left-color: #5f92bf;
+  border-top-color: #5f92bf;
+  border-bottom-color: #5f92bf;
+  border-right-color: #5f92bf;
+  padding: 3;
+  font-family: Arial;
+  color: #ffffff;
+}
+input {
+  background-color: #ffffff;
+  border-color: #ffffff;
+  border-left-color: #ffffff;
+  border-top-color: #ffffff;
+  border-bottom-color: #ffffff;
+  border-right-color: #ffffff;
+  padding: 1px;
+  scrollbar-base-color: #eeeeee;
+  font-family: Arial;
+  color: #333333;
+}
+textarea {
+  background-color: #ffffff;
+  border-color: #ffffff;
+  border-left-color: #ffffff;
+  border-top-color: #ffffff;
+  border-bottom-color: #ffffff;
+  border-right-color: #ffffff;
+  padding: 1px;
+  scrollbar-base-color: #eeeeee;
+  font-family: Arial;
+  color: #333333;
+  font-size: 13px;
+}
+select {
+  background-color: #ffffff;
+  border-color: #ffffff;
+  border-left-color: #ffffff;
+  border-top-color: #ffffff;
+  border-bottom-color: #ffffff;
+  border-right-color: #ffffff;
+  padding: 1px;
+  scrollbar-base-color: #eeeeee;
+  font-family: Arial;
+  color: #333333;
+}
+
+td.primary.form-required, td.primary.form-optional { padding-left: 14px; }
+td.primary.form-required { background: url(../images/required-star.png) no-repeat; }
+td.primary.form-required sup { display: none; }
+
+tr.biblio-late td { color: red; font-weight: bold; background: #ffccbb; border-color: white; }
+
+
+ul.nav_main { list-style-type: none; padding-left: 0; margin-left: 0; }
+li.nav_selected:before { white-space: pre-wrap; content: "\bb  " }
+ul.nav_main li.nav_selected { font-weight: bold }
+ul.nav_sub li.nav_selected { font-weight: bold }
+ul.nav_main li { font-weight: normal }
+ul.nav_sub li { font-weight: normal }
+
+
+li.report_category { margin-bottom: 1em }
+
+table.results {
+  width: 100%;
+  border-collapse: collapse;
+}
+table.resultshead {
+  width: 100%;
+  border-collapse: separate;
+  border-top: solid #5f92bf 3px;
+  border-bottom: solid #5f92bf 3px;
+  clear: both;
+}
+table.resultshead th {
+  text-align: left;
+  color: #333333;
+  border: none;
+  background: #ffffff;
+  font-size: 16px;
+  font-weight: bold;
+  vertical-align: middle;
+  padding: 2px;
+}
+table.resultshead td {
+  text-align: right;
+}
+table.results td.primary { border-top: none; }
+td.picture { width: 120px; }
+.Z3988 { display: none; }
+
+table.buttons {
+  margin: 0 0 0 auto;
+  padding: 0;
+  border-collapse: separate;
+  background: white;
+}
+table.buttons td {
+  background-color: #5f92bf;
+  /* Hide from IE5/Mac \*/
+  border-color: #5f92bf;
+  border-style: outset;
+  border-width: 1px;
+  /* End hiding */
+  padding: 4px;
+  font-weight: bold;
+  font-size: 12px;
+  text-align: center;
+  vertical-align: middle;
+}
+table.buttons input {
+  border: none;
+  color: #ffffff;
+  background: #5f92bf;
+  padding: 0;
+  margin: 0;
+  font-weight: bold;
+  white-space: normal;
+}
+table.buttons input:hover { text-decoration: underline; }
+table.buttons a {
+  color: #ffffff;
+  text-decoration: none;
+}
+table.buttons a:hover { text-decoration: underline; }
+table.buttons a:visited { color: #ffffff; }
+
+div.errorbox {
+  border-style: solid;
+  border-color: #eeeeee;
+  border-width: 1;
+  max-width: 500px;
+  margin: 10px;
+  padding: 5px;
+  background-color: #eeeeee;
+}
+div.errorbox .errorhdr { font-size: large; font-weight: bold }
+div.errorbox ul { margin-left: 0; padding-left: 1.5em }
+div.errorbox li { margin-left: 0 }
+
+</style>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+<!-- **************************************************************************************
+     * Control de ssessiones y temas
+     **************************************************************************************-->
+<link href="../themes/GiordanoBruno/style.css" rel="stylesheet" type="text/css" media="screen" /><title>Thư viện THPT Dương Đông</title><script language="JavaScript">
+<!--
+function popSecondary(url) {
+    var SecondaryWin;
+    SecondaryWin = window.open(url,"secondary","resizable=yes,scrollbars=yes,width=535,height=400");
+    self.name="main";
+}
+function popSecondaryLarge(url) {
+    var SecondaryWin;
+    SecondaryWin = window.open(url,"secondary","toolbar=yes,resizable=yes,scrollbars=yes,width=700,height=500");
+    self.name="main";
+}
+function backToMain(URL) {
+    var mainWin;
+    mainWin = window.open(URL,"main");
+    mainWin.focus();
+    this.close();
+}
+-->
+</script>
+
+  <script type="text/javascript" src="../scripts/jquery.js"></script>
+  <script type="text/javascript" src="../scripts/jquery.collapsible.js"></script>
+    <script type="text/javascript" src="../scripts/locale/vi.js"></script>
+  <script type="text/javascript" src="../scripts/search.js"></script>
+
+</head>
+<body bgcolor="#ffffff" topmargin="0" bottommargin="0" leftmargin="0" rightmargin="0" marginheight="0" marginwidth="0" onLoad="self.focus();document.loginform.username.focus()" >
+
+<!-- **************************************************************************************
+     * Library Name and hours
+     **************************************************************************************-->
+<table class="primary" width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr bgcolor="#CCCCCC">
+    <td width="100%" class="title" valign="top">
+        <a href="/" class="library-name">Thư viện THPT Dương Đông</a>    </td>
+  </tr>
+</table>
+
+<!-- **************************************************************************************
+     * Tabs
+     **************************************************************************************-->
+<table class="primary" width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr>
+    <td bgcolor="#CCCCCC"><img src="../images/shim.gif" width="1" height="1" border="0"></td>
+    <td bgcolor="#eeeeee"><img src="../images/shim.gif" width="1" height="1" border="0"></td>
+
+    <td bgcolor="#CCCCCC" colspan="3"><img src="../images/shim.gif" width="1" height="1" border="0"></td>
+    <td bgcolor="#eeeeee"><img src="../images/shim.gif" width="1" height="1" border="0"></td>
+
+    <td bgcolor="#CCCCCC" colspan="3"><img src="../images/shim.gif" width="1" height="1" border="0"></td>
+    <td bgcolor="#eeeeee"><img src="../images/shim.gif" width="1" height="1" border="0"></td>
+
+    <td bgcolor="#CCCCCC" colspan="3"><img src="../images/shim.gif" width="1" height="1" border="0"></td>
+    <td bgcolor="#eeeeee"><img src="../images/shim.gif" width="1" height="1" border="0"></td>
+
+    <td bgcolor="#CCCCCC" colspan="3"><img src="../images/shim.gif" width="1" height="1" border="0"></td>
+    <td bgcolor="#eeeeee"><img src="../images/shim.gif" width="1" height="1" border="0"></td>
+
+    <td bgcolor="#CCCCCC" colspan="3"><img src="../images/shim.gif" width="1" height="1" border="0"></td>
+    <td bgcolor="#eeeeee"><img src="../images/shim.gif" width="1" height="1" border="0"></td>
+
+    <td bgcolor="#CCCCCC" colspan="3"><img src="../images/shim.gif" width="1" height="1" border="0"></td>
+    <td bgcolor="#eeeeee"><img src="../images/shim.gif" width="1" height="1" border="0"></td>
+    <td bgcolor="#CCCCCC" colspan="3"><img src="../images/shim.gif" width="1" height="1" border="0"></td>
+
+    <td bgcolor="#CCCCCC" colspan="3"><img src="../images/shim.gif" width="1" height="1" border="0"></td>
+    <td bgcolor="#eeeeee"><img src="../images/shim.gif" width="1" height="1" border="0"></td>
+    <td bgcolor="#CCCCCC" colspan="3"><img src="../images/shim.gif" width="1" height="1" border="0"></td>
+
+  </tr>
+		
+  <tr bgcolor="#CCCCCC">
+    <td bgcolor="#eeeeee"><img src="../images/shim.gif" width="1" height="1" border="0"></td>
+
+          <td  bgcolor="#eeeeee"><img src="../images/shim.gif" width="1" height="1" border="0"></td>
+    
+    <td bgcolor="#eeeeee"><img src="../images/shim.gif" width="1" height="1" border="0"></td>
+    <td bgcolor="#CCCCCC"><img src="../images/shim.gif" width="1" height="1" border="0"></td>
+    <td bgcolor="#eeeeee"><img src="../images/shim.gif" width="1" height="1" border="0"></td>
+
+          <td  bgcolor="#5f92bf"><img src="../images/shim.gif" width="1" height="1" border="0"></td>
+    
+    <td bgcolor="#eeeeee"><img src="../images/shim.gif" width="1" height="1" border="0"></td>
+    <td bgcolor="#CCCCCC"><img src="../images/shim.gif" width="1" height="1" border="0"></td>
+    <td bgcolor="#eeeeee"><img src="../images/shim.gif" width="1" height="1" border="0"></td>
+
+          <td  bgcolor="#5f92bf"><img src="../images/shim.gif" width="1" height="1" border="0"></td>
+    
+    <td bgcolor="#eeeeee"><img src="../images/shim.gif" width="1" height="1" border="0"></td>
+    <td bgcolor="#CCCCCC"><img src="../images/shim.gif" width="1" height="1" border="0"></td>
+    <td bgcolor="#eeeeee"><img src="../images/shim.gif" width="1" height="1" border="0"></td>
+
+          <td  bgcolor="#5f92bf"><img src="../images/shim.gif" width="1" height="1" border="0"></td>
+    
+    <td bgcolor="#eeeeee"><img src="../images/shim.gif" width="1" height="1" border="0"></td>
+    <td bgcolor="#CCCCCC"><img src="../images/shim.gif" width="1" height="1" border="0"></td>
+    <td bgcolor="#eeeeee"><img src="../images/shim.gif" width="1" height="1" border="0"></td>
+
+          <td  bgcolor="#5f92bf"><img src="../images/shim.gif" width="1" height="1" border="0"></td>
+    
+    <td bgcolor="#eeeeee"><img src="../images/shim.gif" width="1" height="1" border="0"></td>
+    <td bgcolor="#CCCCCC"><img src="../images/shim.gif" width="1" height="1" border="0"></td>
+     <td bgcolor="#eeeeee"><img src="../images/shim.gif" width="1" height="1" border="0"></td>
+
+          <td  bgcolor="#5f92bf"><img src="../images/shim.gif" width="1" height="1" border="0"></td>
+        <td bgcolor="#eeeeee"><img src="../images/shim.gif" width="1" height="1" border="0"></td>
+    <td bgcolor="#CCCCCC"><img src="../images/shim.gif" width="1" height="1" border="0"></td>
+    <td  bgcolor="#CCCCCC"><img src="../images/shim.gif" width="1" height="1" border="0"></td>
+          <td  bgcolor="#5f92bf"><img src="../images/shim.gif" width="1" height="1" border="0"></td>
+    
+    <td bgcolor="#eeeeee"><img src="../images/shim.gif" width="1" height="1" border="0"></td>
+    <td bgcolor="#CCCCCC"><img src="../images/shim.gif" width="1" height="1" border="0"></td>
+    <td  bgcolor="#CCCCCC"><img src="../images/shim.gif" width="1" height="1" border="0"></td>
+  </tr>
+
+  <tr bgcolor="#CCCCCC">
+          <td  bgcolor="#eeeeee"><img src="../images/shim.gif" width="1" height="1" border="0"></td>
+      <td class="tab1" nowrap="yes"> Home</td>
+      <td  bgcolor="#eeeeee"><img src="../images/shim.gif" width="1" height="1" border="0"></td>
+    
+    <td bgcolor="#eeeeee"><img src="../images/shim.gif" width="1" height="1" border="0"></td>
+
+          <td  bgcolor="#5f92bf"><img src="../images/shim.gif" width="1" height="1" border="0"></td>
+      <td class="tab2" nowrap="yes"> <a href="../circ/index.php" class="tab">Lưu thông</a> </td>
+      <td  bgcolor="#5f92bf"><img src="../images/shim.gif" width="1" height="1" border="0"></td>
+    
+    <td bgcolor="#eeeeee"><img src="../images/shim.gif" width="1" height="1" border="0"></td>
+
+          <td  bgcolor="#5f92bf"><img src="../images/shim.gif" width="1" height="1" border="0"></td>
+      <td class="tab2" nowrap="yes"> <a href="../catalog/index.php" class="tab">Biên mục</a> </td>
+      <td  bgcolor="#5f92bf"><img src="../images/shim.gif" width="1" height="1" border="0"></td>
+    
+    <td bgcolor="#eeeeee"><img src="../images/shim.gif" width="1" height="1" border="0"></td>
+
+          <td  bgcolor="#5f92bf"><img src="../images/shim.gif" width="1" height="1" border="0"></td>
+      <td class="tab2" nowrap="yes"> <a href="../admin/index.php" class="tab">Quản trị</a> </td>
+      <td  bgcolor="#5f92bf"><img src="../images/shim.gif" width="1" height="1" border="0"></td>
+    
+    <td bgcolor="#eeeeee"><img src="../images/shim.gif" width="1" height="1" border="0"></td>
+
+          <td  bgcolor="#5f92bf"><img src="../images/shim.gif" width="1" height="1" border="0"></td>
+      <td class="tab2" nowrap="yes"> <a href="../reports/index.php" class="tab">Báo cáo thống kê</a> </td>
+      <td  bgcolor="#5f92bf"><img src="../images/shim.gif" width="1" height="1" border="0"></td>
+              <td  bgcolor="#5f92bf"><img src="../images/shim.gif" width="1" height="1" border="0"></td>
+      <td class="tab2" nowrap="yes"> <a href="../inventory/index.php?act=tools" class="tab">Công cụ/Kiểm kê</a> </td>
+      <td  bgcolor="#5f92bf"><img src="../images/shim.gif" width="1" height="1" border="0"></td>
+              <td  bgcolor="#5f92bf"><img src="../images/shim.gif" width="1" height="1" border="0"></td>
+      <td class="tab2" nowrap="yes"> <a href="../opac/index.php" class="tab">Tra cứu</a> </td>
+      <td  bgcolor="#5f92bf"><img src="../images/shim.gif" width="1" height="1" border="0"></td>
+        <td bgcolor="#eeeeee"><img src="../images/shim.gif" width="1" height="1" border="0"></td>
+    <td width="2000" bgcolor="#CCCCCC"><img src="../images/shim.gif" width="1" height="1" border="0"></td>
+  </tr>
+  <tr bgcolor="#eeeeee">
+    <td colspan="3"  bgcolor='#eeeeee'><img src="../images/shim.gif" width="1" height="1" border="0"></td>
+    <td><img src="../images/shim.gif" width="1" height="1" border="0"></td>
+    <td colspan="3" ><img src="../images/shim.gif" width="1" height="1" border="0"></td>
+    <td><img src="../images/shim.gif" width="1" height="1" border="0"></td>
+    <td colspan="3" ><img src="../images/shim.gif" width="1" height="1" border="0"></td>
+    <td><img src="../images/shim.gif" width="1" height="1" border="0"></td>
+    <td colspan="3" ><img src="../images/shim.gif" width="1" height="1" border="0"></td>
+    <td><img src="../images/shim.gif" width="1" height="1" border="0"></td>
+    <td colspan="3" ><img src="../images/shim.gif" width="1" height="1" border="0"></td>
+    <td><img src="../images/shim.gif" width="1" height="1" border="0"></td>
+    <td colspan="3" ><img src="../images/shim.gif" width="1" height="1" border="0"></td>
+    <td><img src="../images/shim.gif" width="1" height="1" border="0"></td>
+   <td colspan="3" ><img src="../images/shim.gif" width="1" height="1" border="0"></td>
+    <td><img src="../images/shim.gif" width="1" height="1" border="0"></td>
+    <td><img src="../images/shim.gif" width="1" height="1" border="0"></td>
+  </tr>
+</table>
+
+<!-- **************************************************************************************
+     * Left nav
+     **************************************************************************************-->
+<table height="100%" width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr bgcolor="#eeeeee">
+    <td colspan="6"><img src="../images/shim.gif" width="1" height="15" border="0"></td>
+  </tr>
+  <tr>
+    <td bgcolor="#eeeeee"><img src="../images/shim.gif" width="10" height="1" border="0"></td>
+    <td bgcolor="#eeeeee"><img src="../images/shim.gif" width="140" height="1" border="0"></td>
+    <td bgcolor="#eeeeee"><img src="../images/shim.gif" width="1" height="1" border="0"></td>
+    <td bgcolor="#eeeeee"><img src="../images/shim.gif" width="10" height="1" border="0"></td>
+    <td bgcolor="#eeeeee"><img src="../images/shim.gif" width="1" height="1" border="0"></td>
+    <td bgcolor="#eeeeee"><img src="../images/shim.gif" width="10" height="1" border="0"></td>
+  </tr>
+  <tr>
+    <td bgcolor="#eeeeee"><img src="../images/shim.gif" width="1" height="1" border="0"></td>
+    <td valign="top" bgcolor="#eeeeee" class="nav">
+        <font  class="alt1">
+          <input type="button" onClick="self.location='../shared/loginform.php?RET=../home/index.php'" value="Đăng nhập" class="navbutton">
+<br /><br />
+
+<ul>
+ <li>
+   <a href="../../" class="alt1">Trang chủ</a>
+ </li>
+ <li>
+   <a href="../doc/license.php" class="alt1">Bản quyền</a>
+ </li>
+
+ <li>
+   <a href="../doc/credits.php" class="alt1">Đóng góp</a>
+ </li>
+
+ <li>
+   <a href="../user/index.php" class="alt1">Đặt mượn, Gia hạn</a>
+ </li>
+
+ <li>
+   <a href="../opac/index.php" class="alt1">Tra cứu OPAC</a>
+ </li>
+
+ <li>
+   <a href="../doc/readme.php" class="alt1">Ghi chú</a>
+ </li>
+
+ <li>
+   <a href="../doc/changelog.php" class="alt1">Lịch sử thay đổi (ChangeLog)</a>
+ </li>
+
+ <li>
+   <a href="javascript:popSecondary('../shared/help.php')">Hướng dẫn</a>
+ </li>
+</ul>
+        </font>
+    <br><br><br><br>
+    </td>
+    <td bgcolor="#eeeeee"><img src="../images/shim.gif" width="1" height="1" border="0"></td>
+    <td bgcolor="#ffffff"><img src="../images/shim.gif" width="1" height="1" border="0"></td>
+    <td height="100%" width="100%" valign="top">
+      <font class="primary">
+<!-- **************************************************************************************
+     * beginning of main body
+     **************************************************************************************-->
+<br>
+<center>
+<form name="loginform" method="POST" action="../shared/login.php">
+<table class="primary">
+  <tr>
+    <th>Nhân viên đăng nhập:</th>
+  </tr>
+  <tr>
+    <td valign="top" class="primary" align="left">
+<table class="primary">
+  <tr>
+    <td valign="top" class="noborder">
+      Username:</font>
+    </td>
+    <td valign="top" class="noborder">
+      <input type="text" name="username" size="20" maxlength="20" value="" >
+      <font class="error"></font>
+    </td>
+  </tr>
+  <tr>
+    <td valign="top" class="noborder">
+      Password:</font>
+    </td>
+    <td valign="top" class="noborder">
+      <input type="password" name="pwd" size="20" maxlength="20" value="" >
+      <font class="error">
+      </font>
+    </td>
+  </tr>
+  <tr>
+    <td colspan="2" align="center" class="noborder">
+      <input type="submit" value="Thực hiện" class="button">
+    </td>
+  </tr>
+</table>
+    </td>
+  </tr>
+</table>
+
+</form>
+</center>
+<hr>
+Quên mật khẩu đăng nhập vui liên hệ thư viện tỉnh hoặc gia nhập group VietBiblio để cấp lại mật khẩu mới!
+Sử dụng từ khóa <b>(MATKHAU)</b> trước nội dung yêu cầu!
+<br>Lưu ý: dùng điện thoại mở ứng dụng Zalo và khai báo tên trường, huyện để phê duyệt đăng ký!
+<ol><li>Miền Nam: <a href="https://zalo.me/g/wuxdey047">https://zalo.me/g/wuxdey047</a></li><li>Miền Trung: <a href="https://zalo.me/g/yxmjre082">https://zalo.me/g/yxmjre082</a></li><li>Miền Bắc: <a href="https://zalo.me/g/dsbdiv953">https://zalo.me/g/dsbdiv953</a></li><li>Tây Nguyên: <a href="https://zalo.me/g/jqkubi990">https://zalo.me/g/jqkubi990</a></li><li>Đắk Lắk-Phú Yên: <a href="https://zalo.me/g/zotcvc255">https://zalo.me/g/zotcvc255</a></li><li>Gia Lai-Bình Định: <a href="https://zalo.me/g/zhhlmx401">https://zalo.me/g/zhhlmx401</a></li><li>Quảng Ngãi-Kon Tum-Quảng Nam-Đà Nẵng: <a href="https://zalo.me/g/bqvnsg811">https://zalo.me/g/bqvnsg811</a></li><li>Hà Tĩnh: <a href="https://zalo.me/g/gmyksc029">https://zalo.me/g/gmyksc029</a></li><li>Nghệ An-Thanh Hóa: <a href="https://zalo.me/g/ozanyj438">https://zalo.me/g/ozanyj438</a></li><li>Hà Nội: <a href="https://zalo.me/g/kaxhep106">https://zalo.me/g/kaxhep106</a></li><li>Hải Phòng-Hải Dương, Hưng Yên-Thái Bình: <a href="https://zalo.me/g/ktbent266">https://zalo.me/g/ktbent266</a></li><li>Bắc Ninh-Bắc Giang, Thái Nguyên-Bắc Kạn, Lạng Sơn, Cao Bằng: <a href="https://zalo.me/g/eyzfcy739">https://zalo.me/g/eyzfcy739</a></li><li>Lào Cai, Tuyên Quang, Sơn La: <a href="https://zalo.me/g/tpucht475">https://zalo.me/g/tpucht475</a></li><li>Lai Châu, Điện Biên, Phú Thọ: <a href="https://zalo.me/g/prafvp076">https://zalo.me/g/prafvp076</a></li><li>Ninh Bình-Hà Nam-Nam Định: <a href="https://zalo.me/g/mdvwxu824">https://zalo.me/g/mdvwxu824</a></li><li>Trà Vinh: <a href="https://zalo.me/g/hhfvge413">https://zalo.me/g/hhfvge413</a></li></ol><!-- **************************************************************************************
+     * Footer
+     **************************************************************************************-->
+<br><br><br>
+</font>
+  <div class="footer">
+    <center>
+
+</br>-----------------------</br>
+              <a href="../opac/index.php">OPAC</a> |
+		<a href="../">QUẢN LÝ</a>	
+      
+     <br>
+        <a href="http://obiblio.sourceforge.net/"><img src="../images/powered_by_openbiblio.gif" width="125" height="44" border="0"></a>
+      <br>
+         <a target="_blank" href="https://vietbiblio.lcp.vn">Về VietBiblio</a> | <a href="https://www.facebook.com/hotrothuvien/">Support</a>
+			<br>
+				 Phần mềm quản lý thư viện trường học, Hệ thống thư viện điện tử, phần mềm thư viện điện tử
+			<br>Hỗ trợ liên thông viện, mượn liên thư viện đáp ứng thông tư thông tư 16/2022-TTBGGĐT
+<br>
+     database version GB-0.34<br>
+     footerCodeVersion GB BETA 34.11<br>
+     Powered by OpenBiblio version <br>
+      Copyright &copy; 2002-2005 Dave Stevens<br>
+      under the      <a href="../doc/copying.html">GNU General Public License</a>
+    </center>
+  </div>
+    </td>
+  </tr>
+</table>
+</body>
+</html>

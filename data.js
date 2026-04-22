@@ -1,126 +1,213 @@
-// ===== LIBRARY DATA — Thư Viện THPT Dương Đông =====
+// ===== DỮ LIỆU THƯ VIỆN THPT DƯƠNG ĐÔNG =====
+// Nguồn: https://tvthptduongdong.vsl.vn/lms/opac/ddc.php (trích xuất 22/04/2026)
+// Tất cả dữ liệu dưới đây được lấy trực tiếp từ trang OPAC công khai của thư viện.
+
+const LIBRARY_URL = "https://tvthptduongdong.vsl.vn/lms";
+
+// Hàm tạo link tra cứu trực tiếp trên web thư viện
+function searchLink(tag, words) {
+  return `${LIBRARY_URL}/shared/biblio_search.php?tag=${tag}&tab=opac&words=${encodeURIComponent(words)}`;
+}
+function viewTmLink(tmts) {
+  return `${LIBRARY_URL}/opac/viewtm.php?tm=ts&tab=opac&tmts=${encodeURIComponent(tmts)}`;
+}
+
 const LIBRARY_DATA = {
 
-  // Bộ Sưu Tập (Collections)
+  // ===== BỘ SƯU TẬP (Collections) — từ /admin/collections_list.php =====
   collections: [
-    { code:'TK', name:'Sách Tham Khảo', count:1574, loan:30, icon:'📘', color:'#3b82f6', desc:'Sách tham khảo các môn học, bài tập, nâng cao' },
-    { code:'GK', name:'Sách Giáo Khoa', count:518, loan:30, icon:'📗', color:'#10b981', desc:'Sách giáo khoa chính quy từ lớp 10 đến lớp 12' },
-    { code:'LIBROS', name:'Sách Mượn (LIBROS)', count:164, loan:14, icon:'📙', color:'#f59e0b', desc:'Sách cho mượn ngắn hạn, phục vụ nghiên cứu' },
-    { code:'NV', name:'Sách Nghiệp Vụ', count:106, loan:255, icon:'📕', color:'#8b5cf6', desc:'Tài liệu nghiệp vụ dành cho giáo viên' },
-    { code:'BT', name:'Báo & Tạp Chí', count:29, loan:30, icon:'📰', color:'#f43f5e', desc:'Báo thiếu nhi, tạp chí giáo dục' },
-    { code:'TIENGANH', name:'Sách Tiếng Anh', count:9, loan:14, icon:'🇬🇧', color:'#06b6d4', desc:'Tài liệu học tiếng Anh, sách song ngữ' },
+    { code:'TK', name:'Sách Tham Khảo', count:1574, loan:30, icon:'📘', color:'#3a6a5b', desc:'Sách tham khảo các môn, bài tập nâng cao' },
+    { code:'GK', name:'Sách Giáo Khoa', count:518, loan:30, icon:'📗', color:'#2e7d32', desc:'SGK chính quy lớp 10–12, chương trình mới 2018' },
+    { code:'LIBROS', name:'Sách Mượn (LIBROS)', count:164, loan:14, icon:'📙', color:'#e65100', desc:'Sách cho mượn ngắn hạn 14 ngày' },
+    { code:'NV', name:'Sách Nghiệp Vụ', count:106, loan:255, icon:'📕', color:'#6a1b9a', desc:'Tài liệu nghiệp vụ dành cho giáo viên' },
+    { code:'BT', name:'Báo & Tạp Chí', count:29, loan:30, icon:'📰', color:'#c62828', desc:'Báo thiếu nhi, tạp chí giáo dục' },
+    { code:'TIENGANH', name:'Sách Tiếng Anh', count:9, loan:14, icon:'🇬🇧', color:'#00838f', desc:'Tài liệu học tiếng Anh, sách song ngữ' },
   ],
 
-  // DDC (Dewey Decimal Classification)
+  // ===== TỦ SÁCH (Thư mục chuyên đề) — từ OPAC DDC page chunk 0–4 =====
+  // Đây là danh sách TỦ SÁCH thực tế trên hệ thống, trích từ field 440a
+  tuSach: [
+    // --- Chuyên đề ---
+    { name:'Tủ sách biển đảo', category:'Chuyên đề' },
+    { name:'Tủ sách văn học Việt Nam', category:'Chuyên đề' },
+    { name:'Tủ sách văn học nước ngoài', category:'Chuyên đề' },
+    { name:'Văn học nước ngoài', category:'Chuyên đề' },
+    { name:'Nhà giáo Việt Nam', category:'Chuyên đề' },
+    { name:'Sáng kiến kinh nghiệm', category:'Nghiệp vụ' },
+    { name:'Văn học', category:'Chuyên đề' },
+    { name:'Sách tham khảo', category:'Tham khảo' },
+    { name:'Mĩ thuật', category:'Nghệ thuật' },
+    { name:'Sách Giáo Khoa', category:'SGK' },
+    { name:'Sách Giáo viên', category:'SGK' },
+    { name:'Sách Giáo Khoa Lớp 10', category:'SGK' },
+
+    // --- Ngữ văn ---
+    { name:'Ngữ văn 10', category:'SGK Lớp 10' },
+    { name:'Chuyên đề học tập Ngữ văn 10', category:'Chuyên đề lớp 10' },
+    { name:'Bài tập ngữ văn 10', category:'Bài tập lớp 10' },
+    { name:'Ngữ văn 11', category:'SGK Lớp 11' },
+    { name:'Chuyên đề học tập Ngữ văn 11', category:'Chuyên đề lớp 11' },
+    { name:'Ngữ văn 12', category:'SGK Lớp 12' },
+    { name:'Chuyên đề học tập ngữ văn 12', category:'Chuyên đề lớp 12' },
+    { name:'Ngữ văn', category:'Môn học' },
+
+    // --- Toán ---
+    { name:'Toán 10', category:'SGK Lớp 10' },
+    { name:'Bài tập Toán 10', category:'Bài tập lớp 10' },
+    { name:'Chuyên đề học tập Toán 10', category:'Chuyên đề lớp 10' },
+    { name:'Toán 12', category:'SGK Lớp 12' },
+    { name:'Chuyên đề học tập Toán 12', category:'Chuyên đề lớp 12' },
+    { name:'Môn Toán', category:'Môn học' },
+
+    // --- Vật lí ---
+    { name:'Vật lí 10', category:'SGK Lớp 10' },
+    { name:'Bài tập vật lí 10', category:'Bài tập lớp 10' },
+    { name:'Chuyên đề học tập Vật lí 10', category:'Chuyên đề lớp 10' },
+    { name:'Vật lí 11', category:'SGK Lớp 11' },
+    { name:'Bài tập vật lí 11', category:'Bài tập lớp 11' },
+    { name:'Vật lí 12', category:'SGK Lớp 12' },
+    { name:'Vật lí', category:'Môn học' },
+
+    // --- Hoá học ---
+    { name:'Hoá học 10', category:'SGK Lớp 10' },
+    { name:'Hoá học 11', category:'SGK Lớp 11' },
+    { name:'Chuyên đề học tập hoá học 11', category:'Chuyên đề lớp 11' },
+    { name:'Chuyên đề học tập Hoá học 12', category:'Chuyên đề lớp 12' },
+    { name:'Hoá học', category:'Môn học' },
+    { name:'Môn hoá', category:'Môn học' },
+
+    // --- Sinh học ---
+    { name:'Sinh học 10', category:'SGK Lớp 10' },
+    { name:'Bài tập sinh học 10', category:'Bài tập lớp 10' },
+    { name:'Chuyên đề học tập Sinh học 10', category:'Chuyên đề lớp 10' },
+    { name:'Sinh học 11', category:'SGK Lớp 11' },
+    { name:'Chuyên đề học tập Sinh học 11', category:'Chuyên đề lớp 11' },
+    { name:'Sinh học 12', category:'SGK Lớp 12' },
+    { name:'Chuyên đề học tập Sinh học 12', category:'Chuyên đề lớp 12' },
+    { name:'Sinh học', category:'Môn học' },
+
+    // --- Lịch sử ---
+    { name:'Lịch sử 10', category:'SGK Lớp 10' },
+    { name:'Bài tập Lịch sử 10', category:'Bài tập lớp 10' },
+    { name:'Chuyên đề học tập Lịch sử 10', category:'Chuyên đề lớp 10' },
+    { name:'Bài tập Lịch sử 11', category:'Bài tập lớp 11' },
+    { name:'Chuyên đề học tập lịch sử 11', category:'Chuyên đề lớp 11' },
+    { name:'Lịch sử 12', category:'SGK Lớp 12' },
+    { name:'Chuyên đề học tập lịch sử 12', category:'Chuyên đề lớp 12' },
+    { name:'Lịch sử', category:'Môn học' },
+
+    // --- Địa lí ---
+    { name:'Địa lí 10', category:'SGK Lớp 10' },
+    { name:'Bài tập địa lí 10', category:'Bài tập lớp 10' },
+    { name:'Chuyên Đề Học Tập Địa lí 10', category:'Chuyên đề lớp 10' },
+    { name:'Địa lí 12', category:'SGK Lớp 12' },
+    { name:'Chuyên đề học tập Địa lí 12', category:'Chuyên đề lớp 12' },
+    { name:'Atlat địa lí Việt Nam', category:'Công cụ' },
+    { name:'Địa lí', category:'Môn học' },
+
+    // --- Tin học ---
+    { name:'Tin học 10', category:'SGK Lớp 10' },
+    { name:'Bài tập Tin học 10', category:'Bài tập lớp 10' },
+    { name:'Tin học 11 - Định hướng khoa học máy tính', category:'SGK Lớp 11' },
+    { name:'Tin học 11 - Định hướng tin học ứng dụng', category:'SGK Lớp 11' },
+    { name:'Tin học khoa học máy tính 11', category:'SGK Lớp 11' },
+    { name:'Chuyên đề học tập tin học 11', category:'Chuyên đề lớp 11' },
+
+    // --- Công nghệ ---
+    { name:'Công nghệ trồng trọt', category:'Công nghệ' },
+    { name:'Chuyên đề học tập Công nghệ 11', category:'Chuyên đề lớp 11' },
+    { name:'Công nghệ 12', category:'SGK Lớp 12' },
+    { name:'Công nghệ', category:'Môn học' },
+
+    // --- GDKT&PL ---
+    { name:'Giáo dục Kinh tế và Pháp luật 10', category:'SGK Lớp 10' },
+    { name:'Giáo dục kinh tế và pháp luật 11', category:'SGK Lớp 11' },
+    { name:'Giáo dục Kinh tế và Pháp luật 12', category:'SGK Lớp 12' },
+    { name:'Pháp luật', category:'Môn học' },
+
+    // --- Giáo dục thể chất ---
+    { name:'Giáo dục thể chất 10', category:'SGK Lớp 10' },
+    { name:'Giáo dục thể chất 11', category:'SGK Lớp 11' },
+    { name:'Giáo dục thể chất - Bóng đá 11', category:'Thể chất lớp 11' },
+    { name:'Giáo dục thể chất - Cầu lông 11', category:'Thể chất lớp 11' },
+    { name:'Giáo dục thể chất - Bóng rổ 11', category:'Thể chất lớp 11' },
+
+    // --- Khác ---
+    { name:'Hoạt động trải nghiệm, hướng nghiệp 10', category:'SGK Lớp 10' },
+    { name:'Nguyễn Phú Trọng', category:'Chính trị' },
+    { name:'Sách tặng', category:'Khác' },
+    { name:'Tâm lý học', category:'Chuyên đề' },
+    { name:'Hướng nghiệp', category:'Chuyên đề' },
+    { name:'Thiết kế dạy học', category:'Nghiệp vụ' },
+    { name:'Âm nhạc', category:'Nghệ thuật' },
+    { name:'Tiếng anh', category:'Ngoại ngữ' },
+    { name:'Kỹ năng sống', category:'Chuyên đề' },
+    { name:'Nuôi dạy trẻ em', category:'Chuyên đề' },
+    { name:'Sách nghiệp vụ', category:'Nghiệp vụ' },
+    { name:'Từ điển', category:'Công cụ' },
+    { name:'Truyện ngắn', category:'Văn học' },
+    { name:'Chuyện kể', category:'Văn học' },
+    { name:'Tiểu thuyết', category:'Văn học' },
+    { name:'Truyện tranh', category:'Văn học' },
+    { name:'Khoa học thường thức', category:'Khoa học' },
+    { name:'Văn học Việt Nam', category:'Văn học' },
+    { name:'Kỹ năng ứng xử', category:'Kỹ năng' },
+    { name:'Thơ ca', category:'Văn học' },
+    { name:'Đố vui', category:'Giải trí' },
+    { name:'Tiểu sử', category:'Lịch sử' },
+    { name:'Việt Nam', category:'Đất nước' },
+    { name:'Tục ngữ Việt Nam', category:'Văn hoá' },
+    { name:'Truyện dài', category:'Văn học' },
+    { name:'Địa phương kiên giang', category:'Địa phương' },
+    { name:'Danh nhân thế giới', category:'Lịch sử' },
+    { name:'khoa hoc công nghệ', category:'Khoa học' },
+  ],
+
+  // ===== PHÂN LOẠI DDC (Dewey Decimal) — từ OPAC DDC page chunk 6–24 =====
   ddc: [
-    { num:'000', name:'Tổng quát', nameVi:'Tin học, thông tin & tổng quát', count:85, color:'#64748b', subs:['Tin học','Thông tin','Bách khoa','Thư viện'] },
-    { num:'100', name:'Triết học & Tâm lý', nameVi:'Triết học, tâm lý học, đạo đức', count:92, color:'#8b5cf6', subs:['Triết học','Tâm lý','Đạo đức','Logic'] },
-    { num:'200', name:'Tôn giáo', nameVi:'Tôn giáo, tín ngưỡng', count:18, color:'#a78bfa', subs:['Phật giáo','Tín ngưỡng'] },
-    { num:'300', name:'Khoa học Xã hội', nameVi:'KHXH, luật, giáo dục, kinh tế', count:380, color:'#f59e0b', subs:['Xã hội học','Chính trị','Kinh tế','Luật','Giáo dục','Phong tục'] },
-    { num:'400', name:'Ngôn ngữ', nameVi:'Ngôn ngữ học, từ điển', count:65, color:'#06b6d4', subs:['Tiếng Việt','Tiếng Anh','Từ điển','Ngữ pháp'] },
-    { num:'500', name:'Khoa học Tự nhiên', nameVi:'Toán, Lý, Hóa, Sinh, Địa lý tự nhiên', count:420, color:'#10b981', subs:['Toán','Vật lý','Hóa học','Sinh học','Thiên văn','Địa chất'] },
-    { num:'600', name:'Công nghệ', nameVi:'Y học, kỹ thuật, nông nghiệp', count:78, color:'#f97316', subs:['Y học','Kỹ thuật','Nông nghiệp','Công nghệ'] },
-    { num:'700', name:'Nghệ thuật', nameVi:'Nghệ thuật, âm nhạc, thể thao, giải trí', count:95, color:'#ec4899', subs:['Mỹ thuật','Âm nhạc','Thể thao','Giải trí','Nhiếp ảnh'] },
-    { num:'800', name:'Văn học', nameVi:'Văn học Việt Nam & thế giới', count:650, color:'#3b82f6', subs:['Văn học VN','Văn học nước ngoài','Thơ','Truyện ngắn','Tiểu thuyết','Truyện tranh'] },
-    { num:'900', name:'Lịch sử & Địa lý', nameVi:'Lịch sử, địa lý, tiểu sử', count:417, color:'#f43f5e', subs:['Lịch sử VN','Lịch sử thế giới','Địa lý','Tiểu sử','Du lịch'] },
-  ],
-
-  // Chủ đề (Subjects)
-  subjects: [
-    { name:'Ngữ văn', icon:'✍️', count:320, grades:'10-12', category:'Môn học' },
-    { name:'Toán', icon:'📐', count:280, grades:'10-12', category:'Môn học' },
-    { name:'Vật lý', icon:'⚛️', count:165, grades:'10-12', category:'Môn học' },
-    { name:'Hóa học', icon:'🧪', count:150, grades:'10-12', category:'Môn học' },
-    { name:'Sinh học', icon:'🧬', count:135, grades:'10-12', category:'Môn học' },
-    { name:'Lịch sử', icon:'🏛️', count:190, grades:'10-12', category:'Môn học' },
-    { name:'Địa lý', icon:'🌏', count:145, grades:'10-12', category:'Môn học' },
-    { name:'Tiếng Anh', icon:'🇬🇧', count:120, grades:'10-12', category:'Môn học' },
-    { name:'Tin học', icon:'💻', count:75, grades:'10-12', category:'Môn học' },
-    { name:'Giáo dục Công dân', icon:'⚖️', count:85, grades:'10-12', category:'Môn học' },
-    { name:'Công nghệ', icon:'🔧', count:45, grades:'10-12', category:'Môn học' },
-    { name:'Giáo dục Quốc phòng', icon:'🎖️', count:30, grades:'10-12', category:'Môn học' },
-    { name:'Văn học Việt Nam', icon:'📜', count:210, grades:'', category:'Chuyên đề' },
-    { name:'Văn học Nước ngoài', icon:'🌍', count:95, grades:'', category:'Chuyên đề' },
-    { name:'Truyện tranh / Manga', icon:'🎨', count:48, grades:'', category:'Chuyên đề' },
-    { name:'Tủ sách Biển Đảo', icon:'🏝️', count:35, grades:'', category:'Chuyên đề' },
-    { name:'Kỹ năng sống', icon:'🌱', count:65, grades:'', category:'Chuyên đề' },
-    { name:'Khoa học thường thức', icon:'🔬', count:42, grades:'', category:'Chuyên đề' },
-    { name:'Sáng kiến kinh nghiệm', icon:'💡', count:55, grades:'', category:'Nghiệp vụ' },
-    { name:'Atlat Địa lý Việt Nam', icon:'🗺️', count:28, grades:'', category:'Công cụ' },
-    { name:'Phú Quốc & Kiên Giang', icon:'🌴', count:22, grades:'', category:'Địa phương' },
-    { name:'Bác Hồ & Đảng', icon:'⭐', count:40, grades:'', category:'Chính trị' },
-    { name:'Tâm lý học đường', icon:'🧠', count:38, grades:'', category:'Chuyên đề' },
-    { name:'Du lịch', icon:'✈️', count:30, grades:'', category:'Chuyên đề' },
-    { name:'Lập bản đồ tư duy', icon:'🗂️', count:15, grades:'', category:'Phương pháp' },
-  ],
-
-  // Từ khoá (Keywords / Tags)
-  keywords: [
-    { word:'Toán học', weight:5 },{ word:'Ngữ văn', weight:5 },{ word:'Vật lý', weight:4 },
-    { word:'Hóa học', weight:4 },{ word:'Sinh học', weight:4 },{ word:'Lịch sử Việt Nam', weight:5 },
-    { word:'Địa lý', weight:4 },{ word:'Tiếng Anh', weight:3 },{ word:'Tin học', weight:3 },
-    { word:'Truyện tranh', weight:3 },{ word:'Kỹ năng sống', weight:3 },{ word:'Sách giáo khoa', weight:5 },
-    { word:'Phú Quốc', weight:4 },{ word:'Biển đảo', weight:3 },{ word:'Văn học', weight:5 },
-    { word:'Tiểu thuyết', weight:3 },{ word:'Truyện ngắn', weight:3 },{ word:'Thơ', weight:2 },
-    { word:'Bài tập', weight:4 },{ word:'Đề thi', weight:4 },{ word:'Ôn tập', weight:3 },
-    { word:'Lớp 10', weight:3 },{ word:'Lớp 11', weight:3 },{ word:'Lớp 12', weight:4 },
-    { word:'Nâng cao', weight:3 },{ word:'Tham khảo', weight:4 },{ word:'Giáo dục', weight:3 },
-    { word:'Bác Hồ', weight:3 },{ word:'Đạo đức', weight:2 },{ word:'Tâm lý', weight:2 },
-    { word:'Du lịch', weight:2 },{ word:'Văn hóa', weight:3 },{ word:'Khoa học', weight:3 },
-    { word:'Công nghệ', weight:2 },{ word:'Nghệ thuật', weight:2 },{ word:'Âm nhạc', weight:1 },
-    { word:'Thể dục', weight:2 },{ word:'Quốc phòng', weight:2 },{ word:'Kinh tế', weight:2 },
-    { word:'Manga Teen', weight:2 },{ word:'Bách khoa', weight:2 },{ word:'Từ điển', weight:2 },
-    { word:'Atlat', weight:2 },{ word:'Sáng kiến', weight:2 },{ word:'Nghiệp vụ', weight:2 },
-    { word:'Bản đồ tư duy', weight:2 },{ word:'Tony Buzan', weight:1 },{ word:'Đảng', weight:2 },
-  ],
-
-  // Sample books for search/display
-  books: [
-    { title:'Bồi dưỡng học sinh giỏi sinh học THPT', author:'Nhiều tác giả', ddc:'576', coll:'TK', subject:'Sinh học' },
-    { title:'Hướng dẫn áp dụng chuẩn nghề nghiệp giáo viên', author:'Bộ GD&ĐT', ddc:'344.597', coll:'TK', subject:'Giáo dục' },
-    { title:'Lý Quang Diệu — Người cha lập quốc', author:'Nhiều tác giả', ddc:'895.6', coll:'TK', subject:'Tiểu sử' },
-    { title:'Blog thành công của teen', author:'Nhiều tác giả', ddc:'158.083', coll:'TK', subject:'Kỹ năng sống' },
-    { title:'Bạn trai tháo vát', author:'Nhiều tác giả', ddc:'646.700', coll:'TK', subject:'Kỹ năng sống' },
-    { title:'Kể chuyện Bác Hồ (Tập 1)', author:'Nhiều tác giả', ddc:'959.704', coll:'TK', subject:'Lịch sử' },
-    { title:'Kể chuyện Bác Hồ (Tập 2)', author:'Nhiều tác giả', ddc:'959.704', coll:'TK', subject:'Lịch sử' },
-    { title:'Kể chuyện Bác Hồ (Tập 3)', author:'Nhiều tác giả', ddc:'959.704', coll:'TK', subject:'Lịch sử' },
-    { title:'Phú Quốc, hòn ngọc của biển Đông', author:'Nguyễn Hữu Luyện', ddc:'915.9', coll:'TK', subject:'Du lịch' },
-    { title:'Phú Quốc — Đảo Ngọc', author:'Nguyễn Ngọc Bích', ddc:'915.9', coll:'TK', subject:'Du lịch' },
-    { title:'Phú Quốc — Hòn đảo ngọc', author:'Nguyễn Hữu Hiệp', ddc:'915.9', coll:'TK', subject:'Du lịch' },
-    { title:'Phú Quốc: Viên ngọc quý của Việt Nam', author:'Nguyễn Văn Hiếu', ddc:'915.9', coll:'TK', subject:'Du lịch' },
-    { title:'Lập bản đồ tư duy', author:'Tony Buzan', ddc:'153.4', coll:'TK', subject:'Tâm lý' },
-    { title:'Sách giáo khoa mẫu lớp 12', author:'Bộ GD&ĐT', ddc:'373', coll:'GK', subject:'Giáo dục' },
-    { title:'Toán 10 — Tập 1', author:'Bộ GD&ĐT', ddc:'510', coll:'GK', subject:'Toán' },
-    { title:'Toán 10 — Tập 2', author:'Bộ GD&ĐT', ddc:'510', coll:'GK', subject:'Toán' },
-    { title:'Toán 11', author:'Bộ GD&ĐT', ddc:'510', coll:'GK', subject:'Toán' },
-    { title:'Toán 12', author:'Bộ GD&ĐT', ddc:'510', coll:'GK', subject:'Toán' },
-    { title:'Ngữ văn 10 — Tập 1', author:'Bộ GD&ĐT', ddc:'895.922', coll:'GK', subject:'Ngữ văn' },
-    { title:'Ngữ văn 11 — Tập 1', author:'Bộ GD&ĐT', ddc:'895.922', coll:'GK', subject:'Ngữ văn' },
-    { title:'Ngữ văn 12 — Tập 1', author:'Bộ GD&ĐT', ddc:'895.922', coll:'GK', subject:'Ngữ văn' },
-    { title:'Vật lý 10', author:'Bộ GD&ĐT', ddc:'530', coll:'GK', subject:'Vật lý' },
-    { title:'Vật lý 11', author:'Bộ GD&ĐT', ddc:'530', coll:'GK', subject:'Vật lý' },
-    { title:'Vật lý 12', author:'Bộ GD&ĐT', ddc:'530', coll:'GK', subject:'Vật lý' },
-    { title:'Hóa học 10', author:'Bộ GD&ĐT', ddc:'540', coll:'GK', subject:'Hóa học' },
-    { title:'Hóa học 11', author:'Bộ GD&ĐT', ddc:'540', coll:'GK', subject:'Hóa học' },
-    { title:'Hóa học 12', author:'Bộ GD&ĐT', ddc:'540', coll:'GK', subject:'Hóa học' },
-    { title:'Sinh học 10', author:'Bộ GD&ĐT', ddc:'570', coll:'GK', subject:'Sinh học' },
-    { title:'Sinh học 11', author:'Bộ GD&ĐT', ddc:'570', coll:'GK', subject:'Sinh học' },
-    { title:'Sinh học 12', author:'Bộ GD&ĐT', ddc:'570', coll:'GK', subject:'Sinh học' },
-    { title:'Lịch sử 10', author:'Bộ GD&ĐT', ddc:'959', coll:'GK', subject:'Lịch sử' },
-    { title:'Lịch sử 11', author:'Bộ GD&ĐT', ddc:'959', coll:'GK', subject:'Lịch sử' },
-    { title:'Lịch sử 12', author:'Bộ GD&ĐT', ddc:'959', coll:'GK', subject:'Lịch sử' },
-    { title:'Địa lý 10', author:'Bộ GD&ĐT', ddc:'910', coll:'GK', subject:'Địa lý' },
-    { title:'Địa lý 11', author:'Bộ GD&ĐT', ddc:'910', coll:'GK', subject:'Địa lý' },
-    { title:'Địa lý 12', author:'Bộ GD&ĐT', ddc:'910', coll:'GK', subject:'Địa lý' },
-    { title:'Tiếng Anh 10', author:'Bộ GD&ĐT', ddc:'420', coll:'GK', subject:'Tiếng Anh' },
-    { title:'Tiếng Anh 11', author:'Bộ GD&ĐT', ddc:'420', coll:'GK', subject:'Tiếng Anh' },
-    { title:'Tiếng Anh 12', author:'Bộ GD&ĐT', ddc:'420', coll:'GK', subject:'Tiếng Anh' },
-    { title:'GDCD 10', author:'Bộ GD&ĐT', ddc:'370', coll:'GK', subject:'Giáo dục Công dân' },
-    { title:'Tin học 10', author:'Bộ GD&ĐT', ddc:'004', coll:'GK', subject:'Tin học' },
-    { title:'Tủ sách Phụ nữ Việt Nam', author:'Nhiều tác giả', ddc:'305.4', coll:'TK', subject:'Xã hội' },
-    { title:'Atlat Địa lý Việt Nam', author:'Bộ GD&ĐT', ddc:'912', coll:'TK', subject:'Địa lý' },
-    { title:'Truyện Doraemon tập 1', author:'Fujiko F. Fujio', ddc:'741.5', coll:'BT', subject:'Truyện tranh' },
-    { title:'Truyện Conan tập 1', author:'Aoyama Gosho', ddc:'741.5', coll:'BT', subject:'Truyện tranh' },
-    { title:'English Grammar in Use', author:'Raymond Murphy', ddc:'425', coll:'TIENGANH', subject:'Tiếng Anh' },
+    { num:'000', name:'Tổng quát', nameVi:'Tin học, thông tin & tác phẩm tổng quát' },
+    { num:'100', name:'Triết học & Tâm lý', nameVi:'Triết học, tâm lý học, đạo đức' },
+    { num:'200', name:'Tôn giáo', nameVi:'Tôn giáo, tín ngưỡng' },
+    { num:'300', name:'Khoa học Xã hội', nameVi:'KHXH, luật, giáo dục, kinh tế',
+      subs: [
+        { num:'340', name:'Luật', subs: [
+          { num:'341', name:'Luật quốc tế' },
+          { num:'342', name:'Luật Hiến pháp và Hành chính' },
+          { num:'343', name:'Luật Kinh tế, Tài chính, Thuế' },
+          { num:'344', name:'Luật Xã hội', subs: [
+            '344.01 Luật Lao động','344.02 Luật BHXH',
+            '344.03 Luật Phúc lợi xã hội','344.0327 Luật Trẻ em',
+            '344.07 Luật Giáo dục','344.09 Luật Văn hoá & Tôn giáo',
+            '344.092 Luật Lưu trữ, thông tin và thư viện',
+            '344.093 Luật Bảo tàng và di sản vật thể',
+            '344.094 Luật Văn hóa và Di sản phi vật thể',
+            '344.096 Luật Tôn giáo, tự do tín ngưỡng',
+            '344.097 Luật Nghệ thuật, biểu diễn, nhiếp ảnh',
+            '344.099 Luật Thể thao'
+          ]},
+          { num:'345', name:'Luật hình sự' },
+          { num:'346', name:'Luật dân sự', subs: [
+            '346.01 Luật Hôn nhân và gia đình',
+            '346.02 Luật hợp đồng',
+            '346.04 Luật tài sản, sở hữu trí tuệ',
+            '346.043 Luật Bất động sản',
+            '346.05 Luật công chứng',
+            '346.06 Luật Doanh nghiệp',
+            '346.07 Luật Kinh doanh và thương mại',
+            '346.08 Luật Ngân hàng và Bảo hiểm'
+          ]},
+        ]},
+        { num:'370', name:'Giáo dục', subs:[
+          { num:'372', name:'Giáo dục tiểu học' },
+          { num:'372.3', name:'Kiến thức, máy tính, công nghệ' }
+        ]},
+      ]
+    },
+    { num:'400', name:'Ngôn ngữ', nameVi:'Ngôn ngữ học, từ điển' },
+    { num:'500', name:'Khoa học Tự nhiên', nameVi:'Toán, Lý, Hóa, Sinh, Địa lý tự nhiên' },
+    { num:'600', name:'Công nghệ', nameVi:'Y học, kỹ thuật, nông nghiệp' },
+    { num:'700', name:'Nghệ thuật', nameVi:'Nghệ thuật, âm nhạc, thể thao, giải trí' },
+    { num:'800', name:'Văn học', nameVi:'Văn học Việt Nam & thế giới' },
+    { num:'900', name:'Lịch sử & Địa lý', nameVi:'Lịch sử, địa lý, tiểu sử' },
   ],
 };
